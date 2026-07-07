@@ -8,6 +8,8 @@ DELETE FROM quality_profiles WHERE name IN ('1080p HDR [Deu]', '1080p HDR [Eng]'
 DELETE FROM quality_profile_qualities WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]');
 DELETE FROM quality_profile_languages WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]');
 DELETE FROM quality_profile_custom_formats WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]');
+DELETE FROM quality_profile_tags WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]');
+DELETE FROM quality_groups WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]');
 
 DELETE FROM condition_languages WHERE custom_format_name IN ('Not German', 'Not English');
 DELETE FROM custom_format_conditions WHERE custom_format_name IN ('Not German', 'Not English');
@@ -53,7 +55,19 @@ INSERT INTO quality_profiles (name, description, upgrades_allowed, minimum_custo
 VALUES ('1080p HDR [Eng]', 'Custom 1080p Quality HDR profile prioritizing English language releases.', 1, 20000, 888888, 1);
 
 
--- 3. Clone qualities from baseline '1080p Quality HDR'
+-- 3. Clone quality groups from baseline '1080p Quality HDR'
+INSERT INTO quality_groups (quality_profile_name, name)
+SELECT '1080p HDR [Deu]', name
+FROM quality_groups
+WHERE quality_profile_name = '1080p Quality HDR';
+
+INSERT INTO quality_groups (quality_profile_name, name)
+SELECT '1080p HDR [Eng]', name
+FROM quality_groups
+WHERE quality_profile_name = '1080p Quality HDR';
+
+
+-- 4. Clone qualities from baseline '1080p Quality HDR'
 INSERT INTO quality_profile_qualities (quality_profile_name, quality_group_name, quality_name, position, upgrade_until)
 SELECT '1080p HDR [Deu]', quality_group_name, quality_name, position, upgrade_until
 FROM quality_profile_qualities
@@ -65,7 +79,7 @@ FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
 
--- 4. Clone languages from baseline '1080p Quality HDR'
+-- 5. Clone languages from baseline '1080p Quality HDR'
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
 SELECT '1080p HDR [Deu]', language_name, type
 FROM quality_profile_languages
@@ -77,7 +91,7 @@ FROM quality_profile_languages
 WHERE quality_profile_name = '1080p Quality HDR';
 
 
--- 5. Clone custom formats from baseline '1080p Quality HDR'
+-- 6. Clone custom formats from baseline '1080p Quality HDR'
 INSERT INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
 SELECT '1080p HDR [Deu]', custom_format_name, arr_type, score
 FROM quality_profile_custom_formats
@@ -89,7 +103,19 @@ FROM quality_profile_custom_formats
 WHERE quality_profile_name = '1080p Quality HDR';
 
 
--- 6. Apply x265 and AV1 Codec Preferences (+10000 for AV1, +5000 for x265/h265)
+-- 7. Clone quality profile tags from baseline '1080p Quality HDR'
+INSERT INTO quality_profile_tags (quality_profile_name, tag_name)
+SELECT '1080p HDR [Deu]', tag_name
+FROM quality_profile_tags
+WHERE quality_profile_name = '1080p Quality HDR';
+
+INSERT INTO quality_profile_tags (quality_profile_name, tag_name)
+SELECT '1080p HDR [Eng]', tag_name
+FROM quality_profile_tags
+WHERE quality_profile_name = '1080p Quality HDR';
+
+
+-- 8. Apply x265 and AV1 Codec Preferences (+10000 for AV1, +5000 for x265/h265)
 UPDATE quality_profile_custom_formats
 SET score = 10000
 WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]') AND custom_format_name = 'AV1';
@@ -99,7 +125,7 @@ SET score = 5000
 WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]') AND custom_format_name IN ('x265 (Bluray)', 'x265 (WEB)', 'h265', 'x265');
 
 
--- 7. Apply Language rules for '1080p HDR [Deu]'
+-- 9. Apply Language rules for '1080p HDR [Deu]'
 -- Must contain German (Not German = -999999)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
 VALUES ('1080p HDR [Deu]', 'Not German', 'radarr', -999999),
@@ -116,7 +142,7 @@ SET score = 1000
 WHERE quality_profile_name = '1080p HDR [Deu]' AND custom_format_name = 'German DL';
 
 
--- 8. Apply Language rules for '1080p HDR [Eng]'
+-- 10. Apply Language rules for '1080p HDR [Eng]'
 -- Must contain English (Not English = -999999)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
 VALUES ('1080p HDR [Eng]', 'Not English', 'radarr', -999999),
