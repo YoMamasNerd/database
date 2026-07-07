@@ -95,6 +95,18 @@ SELECT '1080p HDR [Eng]', quality_name,
 FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
+-- Allow 720p qualities as fallback (enabled = 1, but positioned below 1080p qualities)
+INSERT INTO quality_profile_qualities (quality_profile_name, quality_name, quality_group_name, position, enabled, upgrade_until)
+VALUES 
+  ('1080p HDR [Deu]', 'Bluray-720p', NULL, 100, 1, 0),
+  ('1080p HDR [Deu]', 'WEBDL-720p', NULL, 101, 1, 0),
+  ('1080p HDR [Deu]', 'WEBRip-720p', NULL, 102, 1, 0),
+  ('1080p HDR [Deu]', 'HDTV-720p', NULL, 103, 1, 0),
+  ('1080p HDR [Eng]', 'Bluray-720p', NULL, 100, 1, 0),
+  ('1080p HDR [Eng]', 'WEBDL-720p', NULL, 101, 1, 0),
+  ('1080p HDR [Eng]', 'WEBRip-720p', NULL, 102, 1, 0),
+  ('1080p HDR [Eng]', 'HDTV-720p', NULL, 103, 1, 0);
+
 
 -- 6. Clone languages from baseline '1080p Quality HDR'
 INSERT INTO quality_profile_languages (quality_profile_name, language_name, type)
