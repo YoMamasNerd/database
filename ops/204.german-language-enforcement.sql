@@ -174,3 +174,59 @@ VALUES ('1080p HDR [Eng]', 'Not German', 'radarr', 0),
 UPDATE quality_profile_custom_formats
 SET score = 1000
 WHERE quality_profile_name = '1080p HDR [Eng]' AND custom_format_name = 'German DL';
+
+
+-- 12. Apply High-Quality Audio Preferences (matching 2160p Balanced tier)
+INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
+VALUES 
+  -- 1080p HDR [Deu]
+  ('1080p HDR [Deu]', 'DTS-X', 'radarr', 1600),
+  ('1080p HDR [Deu]', 'DTS-X', 'sonarr', 1600),
+  ('1080p HDR [Deu]', 'DTS-HD MA', 'radarr', 1200),
+  ('1080p HDR [Deu]', 'DTS-HD MA', 'sonarr', 1200),
+  ('1080p HDR [Deu]', 'TrueHD', 'radarr', 1200),
+  ('1080p HDR [Deu]', 'TrueHD', 'sonarr', 1200),
+  ('1080p HDR [Deu]', 'TrueHD (Missing)', 'radarr', 1200),
+  ('1080p HDR [Deu]', 'TrueHD (Missing)', 'sonarr', 1200),
+  ('1080p HDR [Deu]', 'DTS-HD HRA', 'radarr', 700),
+  ('1080p HDR [Deu]', 'DTS-HD HRA', 'sonarr', 700),
+  ('1080p HDR [Deu]', 'Dolby Digital +', 'radarr', 600),
+  ('1080p HDR [Deu]', 'Dolby Digital +', 'sonarr', 600),
+  ('1080p HDR [Deu]', 'DTS-ES', 'radarr', 500),
+  ('1080p HDR [Deu]', 'DTS-ES', 'sonarr', 500),
+  ('1080p HDR [Deu]', 'Atmos', 'radarr', 400),
+  ('1080p HDR [Deu]', 'Atmos', 'sonarr', 400),
+  ('1080p HDR [Deu]', 'Atmos (Missing)', 'radarr', 400),
+  ('1080p HDR [Deu]', 'Atmos (Missing)', 'sonarr', 400),
+  ('1080p HDR [Deu]', 'Dolby Digital', 'radarr', 400),
+  ('1080p HDR [Deu]', 'Dolby Digital', 'sonarr', 400),
+  ('1080p HDR [Deu]', 'DTS', 'radarr', 300),
+  ('1080p HDR [Deu]', 'DTS', 'sonarr', 300),
+  ('1080p HDR [Deu]', 'AAC', 'radarr', 200),
+  ('1080p HDR [Deu]', 'AAC', 'sonarr', 200),
+
+  -- 1080p HDR [Eng]
+  ('1080p HDR [Eng]', 'DTS-X', 'radarr', 1600),
+  ('1080p HDR [Eng]', 'DTS-X', 'sonarr', 1600),
+  ('1080p HDR [Eng]', 'DTS-HD MA', 'radarr', 1200),
+  ('1080p HDR [Eng]', 'DTS-HD MA', 'sonarr', 1200),
+  ('1080p HDR [Eng]', 'TrueHD', 'radarr', 1200),
+  ('1080p HDR [Eng]', 'TrueHD', 'sonarr', 1200),
+  ('1080p HDR [Eng]', 'TrueHD (Missing)', 'radarr', 1200),
+  ('1080p HDR [Eng]', 'TrueHD (Missing)', 'sonarr', 1200),
+  ('1080p HDR [Eng]', 'DTS-HD HRA', 'radarr', 700),
+  ('1080p HDR [Eng]', 'DTS-HD HRA', 'sonarr', 700),
+  ('1080p HDR [Eng]', 'Dolby Digital +', 'radarr', 600),
+  ('1080p HDR [Eng]', 'Dolby Digital +', 'sonarr', 600),
+  ('1080p HDR [Eng]', 'DTS-ES', 'radarr', 500),
+  ('1080p HDR [Eng]', 'DTS-ES', 'sonarr', 500),
+  ('1080p HDR [Eng]', 'Atmos', 'radarr', 400),
+  ('1080p HDR [Eng]', 'Atmos', 'sonarr', 400),
+  ('1080p HDR [Eng]', 'Atmos (Missing)', 'radarr', 400),
+  ('1080p HDR [Eng]', 'Atmos (Missing)', 'sonarr', 400),
+  ('1080p HDR [Eng]', 'Dolby Digital', 'radarr', 400),
+  ('1080p HDR [Eng]', 'Dolby Digital', 'sonarr', 400),
+  ('1080p HDR [Eng]', 'DTS', 'radarr', 300),
+  ('1080p HDR [Eng]', 'DTS', 'sonarr', 300),
+  ('1080p HDR [Eng]', 'AAC', 'radarr', 200),
+  ('1080p HDR [Eng]', 'AAC', 'sonarr', 200);
