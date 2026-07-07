@@ -56,38 +56,42 @@ INSERT INTO quality_profiles (name, description, upgrades_allowed, minimum_custo
 VALUES ('1080p HDR [Eng]', 'Custom 1080p Quality HDR profile prioritizing English language releases.', 1, 20000, 888888, 1);
 
 
--- 3. Clone quality groups from baseline '1080p Quality HDR'
+-- 3. Clone quality groups from baseline '1080p Quality HDR' and rename them to match the new profiles
 INSERT INTO quality_groups (quality_profile_name, name)
-SELECT '1080p HDR [Deu]', name
+SELECT '1080p HDR [Deu]', '1080p HDR [Deu]'
 FROM quality_groups
-WHERE quality_profile_name = '1080p Quality HDR';
+WHERE quality_profile_name = '1080p Quality HDR' AND name = '1080p Quality HDR';
 
 INSERT INTO quality_groups (quality_profile_name, name)
-SELECT '1080p HDR [Eng]', name
+SELECT '1080p HDR [Eng]', '1080p HDR [Eng]'
 FROM quality_groups
-WHERE quality_profile_name = '1080p Quality HDR';
+WHERE quality_profile_name = '1080p Quality HDR' AND name = '1080p Quality HDR';
 
 
--- 4. Clone quality group members from baseline '1080p Quality HDR'
+-- 4. Clone quality group members from baseline '1080p Quality HDR' and map them to the renamed groups
 INSERT INTO quality_group_members (quality_profile_name, quality_group_name, quality_name, position)
-SELECT '1080p HDR [Deu]', quality_group_name, quality_name, position
+SELECT '1080p HDR [Deu]', '1080p HDR [Deu]', quality_name, position
 FROM quality_group_members
-WHERE quality_profile_name = '1080p Quality HDR';
+WHERE quality_profile_name = '1080p Quality HDR' AND quality_group_name = '1080p Quality HDR';
 
 INSERT INTO quality_group_members (quality_profile_name, quality_group_name, quality_name, position)
-SELECT '1080p HDR [Eng]', quality_group_name, quality_name, position
+SELECT '1080p HDR [Eng]', '1080p HDR [Eng]', quality_name, position
 FROM quality_group_members
-WHERE quality_profile_name = '1080p Quality HDR';
+WHERE quality_profile_name = '1080p Quality HDR' AND quality_group_name = '1080p Quality HDR';
 
 
--- 5. Clone qualities from baseline '1080p Quality HDR' (including enabled column to fix cutoff validation error)
+-- 5. Clone qualities from baseline '1080p Quality HDR' (mapping the old group name to the new group name)
 INSERT INTO quality_profile_qualities (quality_profile_name, quality_name, quality_group_name, position, enabled, upgrade_until)
-SELECT '1080p HDR [Deu]', quality_name, quality_group_name, position, enabled, upgrade_until
+SELECT '1080p HDR [Deu]', quality_name, 
+       CASE WHEN quality_group_name = '1080p Quality HDR' THEN '1080p HDR [Deu]' ELSE quality_group_name END, 
+       position, enabled, upgrade_until
 FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
 INSERT INTO quality_profile_qualities (quality_profile_name, quality_name, quality_group_name, position, enabled, upgrade_until)
-SELECT '1080p HDR [Eng]', quality_name, quality_group_name, position, enabled, upgrade_until
+SELECT '1080p HDR [Eng]', quality_name, 
+       CASE WHEN quality_group_name = '1080p Quality HDR' THEN '1080p HDR [Eng]' ELSE quality_group_name END, 
+       position, enabled, upgrade_until
 FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
