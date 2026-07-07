@@ -143,10 +143,10 @@ WHERE quality_profile_name IN ('1080p HDR [Deu]', '1080p HDR [Eng]') AND custom_
 
 
 -- 10. Apply Language rules for '1080p HDR [Deu]'
--- Must contain German (Not German = -999999)
+-- Must contain German (Increased penalty to -9999999 to prevent stacked-score bypasses)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
-VALUES ('1080p HDR [Deu]', 'Not German', 'radarr', -999999),
-       ('1080p HDR [Deu]', 'Not German', 'sonarr', -999999);
+VALUES ('1080p HDR [Deu]', 'Not German', 'radarr', -9999999),
+       ('1080p HDR [Deu]', 'Not German', 'sonarr', -9999999);
 
 -- English is NOT mandatory (Not English = 0)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
@@ -160,10 +160,10 @@ WHERE quality_profile_name = '1080p HDR [Deu]' AND custom_format_name = 'German 
 
 
 -- 11. Apply Language rules for '1080p HDR [Eng]'
--- Must contain English (Not English = -999999)
+-- Must contain English (Increased penalty to -9999999 to prevent stacked-score bypasses)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
-VALUES ('1080p HDR [Eng]', 'Not English', 'radarr', -999999),
-       ('1080p HDR [Eng]', 'Not English', 'sonarr', -999999);
+VALUES ('1080p HDR [Eng]', 'Not English', 'radarr', -9999999),
+       ('1080p HDR [Eng]', 'Not English', 'sonarr', -9999999);
 
 -- German is NOT mandatory (Not German = 0)
 INSERT OR REPLACE INTO quality_profile_custom_formats (quality_profile_name, custom_format_name, arr_type, score)
