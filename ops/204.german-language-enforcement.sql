@@ -67,14 +67,14 @@ FROM quality_groups
 WHERE quality_profile_name = '1080p Quality HDR';
 
 
--- 4. Clone qualities from baseline '1080p Quality HDR'
-INSERT INTO quality_profile_qualities (quality_profile_name, quality_group_name, quality_name, position, upgrade_until)
-SELECT '1080p HDR [Deu]', quality_group_name, quality_name, position, upgrade_until
+-- 4. Clone qualities from baseline '1080p Quality HDR' (including enabled column to fix cutoff validation error)
+INSERT INTO quality_profile_qualities (quality_profile_name, quality_name, quality_group_name, position, enabled, upgrade_until)
+SELECT '1080p HDR [Deu]', quality_name, quality_group_name, position, enabled, upgrade_until
 FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
-INSERT INTO quality_profile_qualities (quality_profile_name, quality_group_name, quality_name, position, upgrade_until)
-SELECT '1080p HDR [Eng]', quality_group_name, quality_name, position, upgrade_until
+INSERT INTO quality_profile_qualities (quality_profile_name, quality_name, quality_group_name, position, enabled, upgrade_until)
+SELECT '1080p HDR [Eng]', quality_name, quality_group_name, position, enabled, upgrade_until
 FROM quality_profile_qualities
 WHERE quality_profile_name = '1080p Quality HDR';
 
