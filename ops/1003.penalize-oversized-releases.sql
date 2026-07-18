@@ -49,13 +49,14 @@ VALUES ('Penalize Oversized Episode', 'Episode Size Upper Limit', 'size', 'sonar
 -- 3. Set size thresholds (in bytes)
 -- 6 GB = 6 * 1024^3 = 6442450944 bytes
 -- min_bytes = 6442450944 means "release must be greater than 6 GB"
--- max_bytes = NULL means "no upper limit"
+-- max_bytes = 1000 GB = 1073741824000 bytes (effectively unlimited, but
+--   Radarr/Sonarr require max > min — NULL gets converted to 0 and rejected)
 INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes)
-VALUES ('Penalize Oversized Movie', 'Movie Size Upper Limit', 6442450944, NULL);
+VALUES ('Penalize Oversized Movie', 'Movie Size Upper Limit', 6442450944, 1073741824000);
 
 -- 2 GB = 2 * 1024^3 = 2147483648 bytes
 INSERT INTO condition_sizes (custom_format_name, condition_name, min_bytes, max_bytes)
-VALUES ('Penalize Oversized Episode', 'Episode Size Upper Limit', 2147483648, NULL);
+VALUES ('Penalize Oversized Episode', 'Episode Size Upper Limit', 2147483648, 1073741824000);
 
 -- 4. Assign to custom profiles with NEGATIVE score
 -- -200000 is enough to override the highest Quality Tier bonus (+185000 for Tier 1)
