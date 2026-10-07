@@ -40,7 +40,7 @@ INSERT INTO tags (name) VALUES ('Penalty') ON CONFLICT (name) DO NOTHING;
 
 -- 1. Create named regular expression (Profilarr convention)
 INSERT INTO regular_expressions (name, pattern, description) VALUES
-  ('WAREZCX', '(?<=^|[\\s.-])WAREZCX\\b', 'Release group with confirmed fake-resolution releases (1080p title, 720p video): Lanterns S01E01/E04/E06, Dark.Matter S02E04.');
+  ('WAREZCX', '(?<=^|[\s.-])WAREZCX\b', 'Release group with confirmed fake-resolution releases (1080p title, 720p video): Lanterns S01E01/E04/E06, Dark.Matter S02E04.');
 
 -- 2. Create Custom Format
 INSERT INTO custom_formats (name, description) VALUES
